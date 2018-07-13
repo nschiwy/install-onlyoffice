@@ -71,6 +71,6 @@ server {
 EOF
 #ORIGINAL: cp -f /etc/onlyoffice/documentserver/nginx/onlyoffice-documentserver-ssl.conf.template /etc/nginx/conf.d/onlyoffice-documentserver.conf
 mkdir /var/www/letsencrypt
-chown -R /var/www/letsencrypt
+chown -R www-data /var/www/letsencrypt
 /usr/sbin/service nginx restart 
 exit 0
