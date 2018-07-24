@@ -2,6 +2,7 @@
 ### Onlyoffice v.5.1 based on Ubuntu 18.04.x LTS         ###
 ### Passwort for PostgreSQL: onlyoffice                  ###
 ### for Intranet (local IPv4) only, e.g. 192.168.2.0/24  ###
+### Version 2.0 - July, 24th 2018                        ###
 ############################################################
 #!/bin/bash
 apt update && apt upgrade -y && apt install software-properties-common zip unzip screen curl ffmpeg libfile-fcntllock-perl -y
@@ -30,7 +31,7 @@ server {
   listen [::]:80 default_server;
   server_name _;
   server_tokens off;
-  root /nowhere; ## root doesn't have to be a valid path since we are redirecting
+  root /nowhere;
   rewrite ^ https://$host$request_uri? permanent;
 }
 server {
@@ -47,8 +48,8 @@ server {
   server_tokens off;
   root /usr/share/nginx/html;
   ssl on;
-  ssl_certificate /etc/ssl/certs/ssl-cert-snakeoil.pem; #{{SSL_CERTIFICATE_PATH}};
-  ssl_certificate_key /etc/ssl/private/ssl-cert-snakeoil.key; # {{SSL_KEY_PATH}};
+  ssl_certificate /etc/ssl/certs/ssl-cert-snakeoil.pem;
+  ssl_certificate_key /etc/ssl/private/ssl-cert-snakeoil.key;
   ssl_verify_client off;
   ssl_ciphers "EECDH+AESGCM:EDH+AESGCM:AES256+EECDH:AES256+EDH";
   ssl_protocols  TLSv1 TLSv1.1 TLSv1.2;
@@ -59,17 +60,15 @@ server {
   # ssl_stapling on;
   # ssl_stapling_verify on;
   # ssl_trusted_certificate /etc/nginx/ssl/stapling.trusted.crt;
-  resolver 192.168.2.1 valid=300s; # Can change to your DNS resolver if desired
-  # resolver_timeout 10s;
+  resolver 208.67.222.222 valid=300s; # Can be changed to your DNS if desired
+  resolver_timeout 10s;
   ## [Optional] Generate a stronger DHE parameter:
   ##   cd /etc/ssl/certs
   ##   sudo openssl dhparam -out dhparam.pem 4096
-  ##
   # ssl_dhparam /etc/ssl/certs/dhparam.pem;
   include /etc/nginx/includes/onlyoffice-documentserver-*.conf;
 }
 EOF
-#ORIGINAL: cp -f /etc/onlyoffice/documentserver/nginx/onlyoffice-documentserver-ssl.conf.template /etc/nginx/conf.d/onlyoffice-documentserver.conf
 mkdir /var/www/letsencrypt
 chown -R www-data /var/www/letsencrypt
 /usr/sbin/service nginx restart 
