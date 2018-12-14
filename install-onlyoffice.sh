@@ -6,15 +6,17 @@
 ############################################################
 #!/bin/bash
 apt update && apt upgrade -y && apt install software-properties-common zip unzip screen curl ffmpeg libfile-fcntllock-perl -y
-add-apt-repository ppa:certbot/certbot -y && apt update && apt upgrade -y && apt install letsencrypt -y
+add-apt-repository ppa:certbot/certbot -y && apt update && apt upgrade -y && apt install letsencrypt -y && apt install python-certbot-nginx
 apt install gcc g++ make -y
 curl -sL https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
      echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
 apt update && apt install yarn -y
 curl -sL https://deb.nodesource.com/setup_6.x | sudo bash -
 apt install postgresql -y
+echo -n "Enter your database password then press [ENTER]: "
+read db_password
 sudo -i -u postgres psql -c "CREATE DATABASE onlyoffice;"
-sudo -i -u postgres psql -c "CREATE USER onlyoffice WITH password 'onlyoffice';"
+sudo -i -u postgres psql -c "CREATE USER onlyoffice WITH password '$db_password';"
 sudo -i -u postgres psql -c "GRANT ALL privileges ON DATABASE onlyoffice TO onlyoffice;"
 apt install redis-server -y
 apt install rabbitmq-server -y
