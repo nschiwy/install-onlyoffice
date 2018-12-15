@@ -6,7 +6,7 @@
 ############################################################
 #!/bin/bash
 apt update && apt upgrade -y && apt install software-properties-common zip unzip screen curl ffmpeg libfile-fcntllock-perl -y
-add-apt-repository ppa:certbot/certbot -y && apt update && apt upgrade -y && apt install letsencrypt -y && apt install python-certbot-nginx
+add-apt-repository ppa:certbot/certbot -y && apt update && apt upgrade -y && apt install letsencrypt -y && apt install python-certbot-nginx -y
 apt install gcc g++ make -y
 curl -sL https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
      echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
