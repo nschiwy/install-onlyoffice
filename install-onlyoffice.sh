@@ -1,8 +1,6 @@
 ############################################################
 ### Onlyoffice v.5.1 based on Ubuntu 18.04.x LTS         ###
-### Passwort for PostgreSQL: onlyoffice                  ###
-### for Intranet (local IPv4) only, e.g. 192.168.2.0/24  ###
-### Version 2.0 - July, 24th 2018                        ###
+### Version 2.1 - December 22nd 2018                     ###
 ############################################################
 #!/bin/bash
 apt update && apt upgrade -y && apt install software-properties-common zip unzip screen curl ffmpeg libfile-fcntllock-perl -y
@@ -74,4 +72,6 @@ EOF
 mkdir /var/www/letsencrypt
 chown -R www-data /var/www/letsencrypt
 /usr/sbin/service nginx restart 
+sudo ufw allow 'nginx full'
+sudo ufw enable
 exit 0
